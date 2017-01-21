@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
+//using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 //NOTE: If event handler is used add ", IPointerClickHandler" after MonoBehaviour!
@@ -35,6 +36,12 @@ public class MenuScript : MonoBehaviour
     public GameObject creditsMenu;
     //TODO: Uncomment this if application exit in MenuState.Exit works!
     //public GameObject exitMenu;
+
+    // Player menu toggles
+    public bool isSelected;
+    public Toggle isOnePlayer;
+    public Toggle isTwoPlayer;
+    public Toggle isThreePlayer;
 
     #endregion
     
@@ -125,7 +132,7 @@ public class MenuScript : MonoBehaviour
         }
     }
 
-    #region Buttons
+    #region Button OnClick
 
     /// <summary>
     /// Interaction with start button.
@@ -153,8 +160,22 @@ public class MenuScript : MonoBehaviour
         // Log activity
         Debug.Log("You pressed Let's play!");
 
+        // Check active toggle through function.
+        ActiveToggle();
+
         // Add load level for new scene here.
-        SceneManager.LoadScene("GameScreen");
+        if (isSelected == true)
+        {
+            SceneManager.LoadScene("GameScreen");
+        }
+
+        else
+        {
+            // Log activity
+            Debug.Log("SELECT ONE OPTION!!!");
+
+            //TODO: Add function to deactivate button visualy maybe?
+        }
     }
 
     /// <summary>
@@ -231,6 +252,43 @@ public class MenuScript : MonoBehaviour
         //TODO: Menu state or just Application.Quit() ??
         // Change menu state
         //currentState = MenuStates.Exit;
+    }
+
+    #endregion
+
+    #region Player menu toggles
+
+    /// <summary>
+    /// Checks which toggle is active.
+    /// </summary>
+    public void ActiveToggle()
+    {
+        if (isOnePlayer.isOn)
+        {
+            // Log activity
+            Debug.Log("One player selected!");
+            isSelected = true;
+        }
+        
+        else if (isTwoPlayer.isOn)
+        {
+            // Log activity
+            Debug.Log("Two players selected!");
+            isSelected = true;
+        }
+
+        else if (isThreePlayer.isOn)
+        {
+            // Log activity
+            Debug.Log("Three players selected!");
+            isSelected = true;
+        }
+        else
+        {
+            // Log activity
+            Debug.Log("No option is selected...");
+            isSelected = false;
+        }
     }
 
     #endregion
